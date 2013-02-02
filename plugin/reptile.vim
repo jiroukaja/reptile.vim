@@ -21,26 +21,108 @@
 "     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 "     THE SOFTWARE.
 " }}}
-
-if exists("loaded_reptile")
+if exists("g:loaded_reptile")
   finish
 endif
-let loaded_reptile = 1
+let g:loaded_reptile = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! ReptileCword(...)
-    return call('reptile#cursor', a:000)
+" Local values
+let s:dictionary = type({})
+let s:string = type("")
+
+let s:no_check = 0
+
+function! s:get_file_path(...)
+  if a:0 == 0
+    echoerr 'Set Path or Dictionary like {{filetype} : {path_string}}'
+    return
+  endif
+  return get_file_path{type(a:1)}(a:000)
 endfunction
 
-function! ReptileVword(...) 
-    return call('reptile#selected', a:000)
+function! s:get_file_path{s:dictionary}(var_list)
+  " Check the lists has key &filetype.
+  if len(a:var_list) > 2
+    echomsg 'Too many vars. (dictionary, string)'
+  endif
+  let l:list = a:var_list
+  if has_key(l:list, &filetype)
+    let l:file_arg = &filetype
+  else
+  " 'default' when &filetype doesn't exist.
+    let l:file_arg = l:list[1]
+    if !has_key(l:list[0], l:file_arg)
+      echoerr 'Invalid default filetype'
+      return
+    endif
+  endif
+  return l:list[0][file_arg]
+endfunction
+
+function! s:get_file_path{s:string}(var_list)
+  if len(a:var_list) > 1
+    echomsg 'Too many vars.'
+  endif
+  return a:var_list[0]
+endfunction
+
+
+function! s:add_word(file_path, word, check)
+  " Check path
+  if !isdirectory(file_path) "filewritable(file_path)
+    " Check directory
+    call mkdir(fnamemodify(file_path, ':p:h'))
+  endif
+  
+  " Add word in path, when not exists. check RegExp
+  if a:check == s:no_check || join(readfile(a:file_path), "\n") =~ '^' . a:word . '$'
+    " Already exists!
+   echomsg "Already exists word: ". a:word
+ else
+    " Add <cword>
+    execute ":redir! >> " . a:faile_path
+      silent! echon a:word
+    redir END
+    echomsg "Add " . a:word . " in ". a:file_path
+  endif
+endfunction
+
+
+function! reptile#cursor(path, ...)
+
+  let l:file_path = s:get_file_path(a:path)
+  let l:check = get(a:, "1" , 0)
+  s:add_word(l:file_path, expand('<cword>'), l:check)
+
 endfunction
 
 
 
-command! -nargs=+ ReptileCword :call ReptileCword(<f-args>)
-command! -nargs=+ ReptileVword :call ReptileVword(<f-args>)
+function! reptile#selected(path, ...)
+
+  let l:file_path = s:get_file_path(a:path)
+  let l:check = get(a:, "1", 0)
+  
+  let save_z = getreg('z', 1)
+  let save_z_type = getregtype('z')
+
+  " Get selected in vmode
+  try
+    normal! gv"zy
+    let l:selected = @z
+  finally
+    call setreg('z', save_z, save_z_type)
+  endtry
+
+  s:add_word(l:file_path, l:selected, l:check)
+
+endfunction
+
+
+command! -nargs=+ ReptileCword :call reptile#cursor(<f-args>)
+command! -nargs=+ ReptileVword :call reptile#selected(<f-args>)
 
 let &cpo = s:save_cpo
 

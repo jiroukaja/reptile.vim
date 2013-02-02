@@ -121,3 +121,4 @@ function! reptile#selected(path, ...)
 endfunction
 
 let &cpo = s:save_cpo
+
