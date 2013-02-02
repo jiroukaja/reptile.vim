@@ -98,7 +98,7 @@ function! reptile#cursor(path, ...)
   echon "l:file_path = " . l:file_path
   echon ", l:check = " . l:check
   echon ", expand('<cword>') = " . expand('<cword>')
-  s:add_word(l:file_path, expand('<cword>'), l:check)
+  "s:add_word(l:file_path, expand('<cword>'), l:check)
 endfunction
 
 function! reptile#selected(path, ...)
