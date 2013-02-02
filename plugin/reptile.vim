@@ -93,13 +93,19 @@ endfunction
 
 
 function! reptile#cursor(path, ...)
-  echon a:path
+  echon "path =" . a:path
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1" , 0)
-  echon "l:file_path = " . l:file_path
+  echon ", l:file_path = " . l:file_path
   echon ", l:check = " . l:check
   echon ", expand('<cword>') = " . expand('<cword>')
   "s:add_word(l:file_path, expand('<cword>'), l:check)
+endfunction
+
+function! reptile#dictionary()
+  let l:file_path = g:neocomplcache_dictionary_filetype_lists
+  echon "l:file_path = " . l:file_path
+  
 endfunction
 
 function! reptile#selected(path, ...)
@@ -121,7 +127,7 @@ function! reptile#selected(path, ...)
 endfunction
 
 
-command! -nargs=+ ReptileCword :call reptile#cursor(<f-args>)
+command! -nargs=0 ReptileCword :call reptile#dictionary()
 command! -nargs=+ ReptileVword :call reptile#selected(<f-args>)
 
 let &cpo = s:save_cpo
