@@ -93,7 +93,7 @@ endfunction
 
 
 function! reptile#cursor(path, ...)
-  echo a:path
+  echon a:path
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1" , 0)
   echon "l:file_path = " . l:file_path
