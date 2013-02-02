@@ -21,11 +21,12 @@
 "     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 "     THE SOFTWARE.
 " }}}
-
+if exists("g:loaded_reptile")
+  finish
+endif
+let g:loaded_reptile = 1
 let s:save_cpo = &cpo
 set cpo&vim
-
-let g:reptile_is_loaded = 1
 
 " Local values
 let s:dictionary = type({})
@@ -114,4 +115,4 @@ function! reptile#add_selected_word(path, ...)
 
 endif
 
-let &cpo = s:cpo_save
+let &cpo = s:save_cpo

@@ -26,12 +26,11 @@ if exists("loaded_reptile")
   finish
 endif
 let loaded_reptile = 1
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 command! -nargs=+ ReptileCword :call reptile#add_cursor_word(<f-args>)
 command! -nargs=+ ReptileVword :call reptile#add_selected_word(<f-args>)
 
-let &cpo = s:cpo_save
+let &cpo = s:save_cpo
 
