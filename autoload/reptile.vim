@@ -113,6 +113,6 @@ function! reptile#add_selected_word(path, ...)
 
   s:add_word(l:file_path, l:selected, l:check)
 
-endif
+endfunction
 
 let &cpo = s:save_cpo
