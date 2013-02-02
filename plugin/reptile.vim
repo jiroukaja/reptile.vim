@@ -85,10 +85,11 @@ endfunction
 function! reptile#cursor(path, ...)
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, '1' , 0)
-  echon ", l:file_path = " . l:file_path . ", type()" . type(l:file_path)
-  echon ", l:check = " . l:check . ", type()" . type(l:check)
-  echon ", expand('<cword>') = " . expand('<cword>') . ", type()" . type(expand('<cword>'))
-  s:add_word(l:file_path, expand('<cword>'), l:check)
+  let l:word = expand('<cword>')
+  echon ", l:file_path = " . l:file_path . ", type() = " . type(l:file_path)
+  echon ", l:check = " . l:check . ", type() = " . type(l:check)
+  echon ", expand('<cword>') = " . expand('<cword>') . ", type() = " . type(expand('<cword>'))
+  s:add_word(l:file_path, l:word, l:check)
 endfunction
 
 
