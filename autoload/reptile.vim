@@ -105,11 +105,16 @@ function! reptile#selected(path, ...)
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1", 0)
   
+  let save_z = getreg('z', 1)
+  let save_z_type = getregtype('z')
+
   " Get selected in vmode
-  let tmp = @@
-  silent! normal! gvy
-  let l:selected = @@
-  let @@ =tmp
+  try
+    normal! gv"zy
+    let l:selected = @z
+  finally
+    call setreg('z', save_z, save_z_type)
+  endtry
 
   s:add_word(l:file_path, l:selected, l:check)
 

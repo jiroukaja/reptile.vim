@@ -29,8 +29,18 @@ let loaded_reptile = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-command! -nargs=+ ReptileCword :call reptile#add_cursor_word(<f-args>)
-command! -nargs=+ ReptileVword :call reptile#add_selected_word(<f-args>)
+function! ReptileCword(...)
+    return call('reptile#cursor', a:000)
+endfunction
+
+function! ReptileVword(...) 
+    return call('reptile#selected', a:000)
+endfunction
+
+
+
+command! -nargs=+ ReptileCword :call ReptileCword(<f-args>)
+command! -nargs=+ ReptileVword :call ReptileVword(<f-args>)
 
 let &cpo = s:save_cpo
 
