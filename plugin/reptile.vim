@@ -42,7 +42,6 @@ function! s:get_file_path(list)
     return
   endif
 
-
   if type(l:list) == s:dictionary
     " Check the lists has key &filetype.
     if has_key(l:list, &filetype)
@@ -58,14 +57,15 @@ function! s:get_file_path(list)
 endfunction
 
 
-function! s:add_word(file_path, word, check)
-  let l:file_path = a:file_path
-  let l:word = a:word
-  let l:check = a:check
+function! s:add_word(file_path, word, checked)
+  echo "type(file_path) = " . type(a:file_path) . ", type(word) = " . type(a:word) . ", type(checked) = " . type(a:checked)
+  let file_path = a:file_path
+  let word = a:word
+  let checked = a:checked
   " Check path
-  if !isdirectory(a:file_path) "filewritable(file_path)
+  if !isdirectory(file_path) "filewritable(file_path)
     " Check directory
-    call mkdir(fnamemodify(a:file_path, ':p:h'))
+    call mkdir(fnamemodify(file_path, ':p:h'))
   endif
   
   " Add word in path, when not exists. check RegExp
@@ -83,13 +83,13 @@ endfunction
 
 
 function! reptile#cursor(path, ...)
-  let l:file_path = s:get_file_path(a:path)
-  let l:check = get(a:, '1' , 0)
-  let l:word = expand('<cword>')
-  echon ", l:file_path = " . l:file_path . ", type() = " . type(l:file_path)
-  echon ", l:check = " . l:check . ", type() = " . type(l:check)
+  let file_path = s:get_file_path(a:path)
+  let checked = get(a:, '1' , 0)
+  let word = expand('<cword>')
+  echon ", l:file_path = " . file_path . ", type() = " . type(file_path)
+  echon ", l:check = " . checked . ", type() = " . type(checked)
   echon ", expand('<cword>') = " . expand('<cword>') . ", type() = " . type(expand('<cword>'))
-  s:add_word("/Users/jk/.vim/dict/lisp.dict", l:word, l:check)
+  s:add_word(file_path, word, checked)
 endfunction
 
 
