@@ -90,7 +90,7 @@ function! s:add_word(file_path, word, check)
 endfunction
 
 
-function! reptile#add_cursor_word(path, ...)
+function! reptile#cursor(path, ...)
 
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1" , 0)
@@ -100,7 +100,7 @@ endfunction
 
 
 
-function! reptile#add_selected_word(path, ...)
+function! reptile#selected(path, ...)
 
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1", 0)
