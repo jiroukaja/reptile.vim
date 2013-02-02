@@ -102,8 +102,10 @@ function! reptile#cursor(path, ...)
   "s:add_word(l:file_path, expand('<cword>'), l:check)
 endfunction
 
-function! reptile#dictionary()
+function! reptile#dictionary(path)
+  let dict = a:path
   let file_dictionary = g:neocomplcache_dictionary_filetype_lists
+  echo dict
   echo file_dictionary
   echo g:neocomplcache_dictionary_filetype_lists
   
@@ -128,7 +130,7 @@ function! reptile#selected(path, ...)
 endfunction
 
 
-command! -nargs=0 ReptileCword :call reptile#dictionary()
+command! -nargs=* ReptileCword :call reptile#dictionary(<f-args>)
 command! -nargs=+ ReptileVword :call reptile#selected(<f-args>)
 
 let &cpo = s:save_cpo
