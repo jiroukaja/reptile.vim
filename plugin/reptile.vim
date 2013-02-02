@@ -59,6 +59,9 @@ endfunction
 
 
 function! s:add_word(file_path, word, check)
+  let l:file_path = a:file_path
+  let l:word = a:word
+  let l:check = a:check
   " Check path
   if !isdirectory(a:file_path) "filewritable(file_path)
     " Check directory
@@ -66,15 +69,15 @@ function! s:add_word(file_path, word, check)
   endif
   
   " Add word in path, when not exists. check RegExp
-  if get(a:, 'check', 0) == s:no_check || join(readfile(a:file_path), "\n") =~ '^' . a:word . '$'
+  if l:check == s:no_check || join(readfile(l:file_path), "\n") =~ '^' . l:word . '$'
     " Already exists!
-   echomsg "Already exists word: ". a:word
+   echomsg "Already exists word: ". l:word
  else
     " Add <cword>
-    execute ":redir! >> " . a:faile_path
-      silent! echon a:word
+    execute ":redir! >> " . l:faile_path
+      silent! echon l:word
     redir END
-    echomsg "Add " . a:word . " in ". a:file_path
+    echomsg "Add " . l:word . " in ". l:file_path
   endif
 endfunction
 
@@ -82,9 +85,9 @@ endfunction
 function! reptile#cursor(path, ...)
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, '1' , 0)
-  echon ", l:file_path = " . l:file_path
-  echon ", l:check = " . l:check
-  echon ", expand('<cword>') = " . expand('<cword>')
+  echon ", l:file_path = " . l:file_path . ", type()" . type(l:file_path)
+  echon ", l:check = " . l:check . ", type()" . type(l:check)
+  echon ", expand('<cword>') = " . expand('<cword>') . ", type()" . type(expand('<cword>'))
   s:add_word(l:file_path, expand('<cword>'), l:check)
 endfunction
 
