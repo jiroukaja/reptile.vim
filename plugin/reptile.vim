@@ -105,7 +105,7 @@ endfunction
 function! reptile#dictionary()
   unlet l:file_path
   let l:file_path = g:neocomplcache_dictionary_filetype_lists
-  echon "l:file_path = " . l:file_path
+  echo g:neocomplcache_dictionary_filetype_lists
   
 endfunction
 
