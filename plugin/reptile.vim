@@ -89,7 +89,7 @@ function! reptile#cursor(path, ...)
   echon ", l:file_path = " . l:file_path . ", type() = " . type(l:file_path)
   echon ", l:check = " . l:check . ", type() = " . type(l:check)
   echon ", expand('<cword>') = " . expand('<cword>') . ", type() = " . type(expand('<cword>'))
-  s:add_word(l:file_path, l:word, l:check)
+  s:add_word("/Users/jk/.vim/dict/lisp.dict", l:word, l:check)
 endfunction
 
 
