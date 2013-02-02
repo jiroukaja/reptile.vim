@@ -130,7 +130,7 @@ function! reptile#selected(path, ...)
 endfunction
 
 
-command! -nargs=1 ReptileCword :call reptile#dictionary(<arg>)
+command! -nargs=1 ReptileCword :call reptile#dictionary(<args>)
 command! -nargs=+ ReptileVword :call reptile#selected(<f-args>)
 
 let &cpo = s:save_cpo
