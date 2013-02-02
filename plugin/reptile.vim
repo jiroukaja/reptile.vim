@@ -54,8 +54,9 @@ function! s:get_file_path(...)
       " 'default' when &filetype doesn't exist.
       let l:file_arg = a:2
       if !has_key(l:list, l:file_arg)
-      echoerr 'Invalid default filetype'
-      return
+        echoerr 'Invalid default filetype'
+        return
+      endif
     endif
     return l:list[file_arg]
   elseif type(l:list) == s:string
