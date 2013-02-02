@@ -39,7 +39,8 @@ function! s:get_file_path(...)
     echoerr 'Set Path or Dictionary like {{filetype} : {path_string}}'
     return
   endif
-  return get_file_path{type(a:1)}(a:000)
+
+  return s:get_file_path{type(a:1)}(a:000)
 endfunction
 
 function! s:get_file_path{s:dictionary}(var_list)
@@ -95,10 +96,7 @@ function! reptile#cursor(path, ...)
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1" , 0)
   s:add_word(l:file_path, expand('<cword>'), l:check)
-
 endfunction
-
-
 
 function! reptile#selected(path, ...)
 
@@ -115,9 +113,7 @@ function! reptile#selected(path, ...)
   finally
     call setreg('z', save_z, save_z_type)
   endtry
-
   s:add_word(l:file_path, l:selected, l:check)
-
 endfunction
 
 
