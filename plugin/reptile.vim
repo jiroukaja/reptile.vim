@@ -63,7 +63,7 @@ function! s:get_file_path(...)
     if l:lenght > 1
       echomsg 'Too many vars.'
     endif
-    return a:var_list[0]
+    return l:list
   else
     echoerr 'Invalid values'
     return
