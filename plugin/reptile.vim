@@ -35,46 +35,46 @@ let s:string = type("")
 let s:no_check = 0
 
 function! s:get_file_path(...)
-  if a:0 == 0
+  let l:lenght = a:0
+  if l:lenght == 0
     echoerr 'Set Path or Dictionary like {{filetype} : {path_string}}'
     return
   endif
 
-  return s:get_file_path{type(a:1)}(a:000)
-endfunction
+  let l:list = a:1
 
-function! s:get_file_path{s:dictionary}(var_list)
-  " Check the lists has key &filetype.
-  if len(a:var_list) > 2
-    echomsg 'Too many vars. (dictionary, string)'
-  endif
-  let l:list = a:var_list
-  if has_key(l:list, &filetype)
-    let l:file_arg = &filetype
-  else
-  " 'default' when &filetype doesn't exist.
-    let l:file_arg = l:list[1]
-    if !has_key(l:list[0], l:file_arg)
+  if type(l:list) == s:dictionary
+    " Check the lists has key &filetype.
+    if l:length > 2
+      echomsg 'Too many vars. (dictionary, string)'
+    endif
+    if has_key(l:list, &filetype)
+      let l:file_arg = &filetype
+    else
+      " 'default' when &filetype doesn't exist.
+      let l:file_arg = a:2
+      if !has_key(l:list, l:file_arg)
       echoerr 'Invalid default filetype'
       return
     endif
+    return l:list[file_arg]
+  elseif type(l:list) == s:string
+    if l:lenght > 1
+      echomsg 'Too many vars.'
+    endif
+    return a:var_list[0]
+  else
+    echoerr 'Invalid values'
+    return
   endif
-  return l:list[0][file_arg]
-endfunction
-
-function! s:get_file_path{s:string}(var_list)
-  if len(a:var_list) > 1
-    echomsg 'Too many vars.'
-  endif
-  return a:var_list[0]
 endfunction
 
 
 function! s:add_word(file_path, word, check)
   " Check path
-  if !isdirectory(file_path) "filewritable(file_path)
+  if !isdirectory(a:file_path) "filewritable(file_path)
     " Check directory
-    call mkdir(fnamemodify(file_path, ':p:h'))
+    call mkdir(fnamemodify(a:file_path, ':p:h'))
   endif
   
   " Add word in path, when not exists. check RegExp
