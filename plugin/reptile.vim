@@ -93,7 +93,6 @@ endfunction
 
 
 function! reptile#cursor(path, ...)
-  echon "path =" . a:path
   let l:file_path = s:get_file_path(a:path)
   let l:check = get(a:, "1" , 0)
   echon ", l:file_path = " . l:file_path
@@ -130,8 +129,8 @@ function! reptile#selected(path, ...)
 endfunction
 
 
-command! -nargs=1 ReptileCword :call reptile#dictionary(<args>)
-command! -nargs=+ ReptileVword :call reptile#selected(<f-args>)
+command! -nargs=1 ReptileCword :call reptile#cursor(<args>)
+command! -nargs=1 ReptileVword :call reptile#selected(<args>)
 
 let &cpo = s:save_cpo
 
