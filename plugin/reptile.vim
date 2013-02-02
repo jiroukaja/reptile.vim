@@ -103,8 +103,8 @@ function! reptile#cursor(path, ...)
 endfunction
 
 function! reptile#dictionary()
-  unlet l:file_path
-  let l:file_path = g:neocomplcache_dictionary_filetype_lists
+  let file_dictionary = g:neocomplcache_dictionary_filetype_lists
+  echo file_dictionary
   echo g:neocomplcache_dictionary_filetype_lists
   
 endfunction
