@@ -32,7 +32,7 @@ set cpo&vim
 let s:dictionary = type({})
 let s:string = type("")
 
-let s:no_check = 0
+let s:no_check = 1
 
 function! s:get_file_path(list)
   let l:list = a:list
