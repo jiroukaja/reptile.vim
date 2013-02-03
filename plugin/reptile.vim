@@ -58,7 +58,6 @@ endfunction
 
 
 function! s:add_word(file_path, word, checked)
-  echo "type(file_path) = " . type(a:file_path) . ", type(word) = " . type(a:word) . ", type(checked) = " . type(a:checked)
   let l:file_path = a:file_path
   let l:file_directory = fnamemodify(l:file_path, ':p:h')
   let l:word = a:word
@@ -73,7 +72,7 @@ function! s:add_word(file_path, word, checked)
   if l:checked == s:no_check || join(readfile(l:file_path), "\n") =~ '^' . l:word . '$'
     " Already exists!
    echomsg "Already exists word: " . l:word
- else
+  else
     " Add <cword>
     silent! execute ":! echo " . l:word . " >> " . l:file_path
     echomsg "Add " . l:word . " in ". l:file_path
@@ -85,9 +84,6 @@ function! reptile#cursor(path, ...)
   let l:file_path = s:get_file_path(a:path)
   let l:checked = get(a:, '1' , 0)
   let l:word = expand('<cword>')
-  echon ", l:file_path = " . l:file_path . ", type() = " . type(l:file_path)
-  echon ", l:check = " . l:checked . ", type() = " . type(l:checked)
-  echon ", expand('<cword>') = " . expand('<cword>') . ", type() = " . type(expand('<cword>'))
   call s:add_word(l:file_path, l:word, l:checked)
 endfunction
 
@@ -111,8 +107,8 @@ function! reptile#selected(path, ...)
 endfunction
 
 
-command! -nargs=+ ReptileCword :call reptile#cursor(<args>)
-command! -nargs=+ ReptileVword :call reptile#selected(<args>)
+command -nargs=+ ReptileCword :call reptile#cursor(<args>)
+command -nargs=+ ReptileVword :call reptile#selected(<args>)
 
 let &cpo = s:save_cpo
 
