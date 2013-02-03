@@ -75,7 +75,7 @@ function! s:add_word(file_path, word, checked)
    echomsg "Already exists word: " . l:word
  else
     " Add <cword>
-    execute ":redir! >> " . l:faile_path
+    execute ":redir! >> " . l:file_path
       silent! echon l:word
     redir END
     echomsg "Add " . l:word . " in ". l:file_path
