@@ -1,7 +1,7 @@
 " reptile.vim
 " Author: jiroukaja <jiroukaja@mac.com>
-" Last Change: 02 Feb 2013.
-" Version: 0.0.1
+" Last Change: 03 Feb 2013.
+" Version: 0.1
 " Licence:     The MIT License {{{
 "     Permission is hereby granted, free of charge, to any person obtaining a copy
 "     of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
 "     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 "     THE SOFTWARE.
 " }}}
+
 if exists("g:loaded_reptile")
   finish
 endif
@@ -103,7 +104,6 @@ function! reptile#selected(path, ...)
   finally
     call setreg('z', save_z, save_z_type)
   endtry
-  echo "l:selected = " . l:selected
   call s:add_word(l:file_path, l:selected, l:check)
 endfunction
 
