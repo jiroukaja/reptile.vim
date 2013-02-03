@@ -32,7 +32,7 @@ set cpo&vim
 let s:dictionary = type({})
 let s:string = type("")
 
-let s:no_check = 1
+let s:no_check = 0
 
 function! s:get_file_path(list)
   let l:list = a:list
@@ -71,7 +71,7 @@ function! s:add_word(file_path, word, checked)
   " Add word in path, when not exists. check RegExp
   if l:checked == s:no_check || join(readfile(l:file_path), "\n") =~ '^' . l:word . '$'
     " Already exists!
-   echomsg "Already exists word: " . l:word
+    echomsg "Already exists word: " . l:word . " in " . l:file_path
   else
     " Add <cword>
     silent! execute ":! echo " . l:word . " >> " . l:file_path
@@ -103,6 +103,7 @@ function! reptile#selected(path, ...)
   finally
     call setreg('z', save_z, save_z_type)
   endtry
+  echo "l:selected = " . l:selected
   call s:add_word(l:file_path, l:selected, l:check)
 endfunction
 
