@@ -89,7 +89,7 @@ function! reptile#cursor(path, ...)
   echon ", l:file_path = " . l:file_path . ", type() = " . type(l:file_path)
   echon ", l:check = " . l:checked . ", type() = " . type(l:checked)
   echon ", expand('<cword>') = " . expand('<cword>') . ", type() = " . type(expand('<cword>'))
-  s:add_word(l:file_path, l:word, l:checked)
+  call s:add_word(l:file_path, l:word, l:checked)
 endfunction
 
 
@@ -108,7 +108,7 @@ function! reptile#selected(path, ...)
   finally
     call setreg('z', save_z, save_z_type)
   endtry
-  s:add_word(l:file_path, l:selected, l:check)
+  call s:add_word(l:file_path, l:selected, l:check)
 endfunction
 
 
