@@ -70,7 +70,7 @@ function! s:add_word(file_path, word, checked)
   endif
   
   " Add word in path, when not exists. check RegExp
-  if l:checked == s:no_check || join(readfile(l:file_path), "\n") =~ '^' . l:word . '$'
+  if l:checked == s:no_check || join(readfile(l:file_path), "\n") =~ l:word
     " Already exists!
     echomsg "Already exists word: " . l:word . " in " . l:file_path
   else
