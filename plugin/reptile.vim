@@ -60,12 +60,13 @@ endfunction
 function! s:add_word(file_path, word, checked)
   echo "type(file_path) = " . type(a:file_path) . ", type(word) = " . type(a:word) . ", type(checked) = " . type(a:checked)
   let l:file_path = a:file_path
+  let l:file_directory = fnamemodify(l:file_path, ':p:h')
   let l:word = a:word
   let l:checked = a:checked
   " Check path
-  if !isdirectory(l:file_path) "filewritable(file_path)
+  if !isdirectory(l:file_directory) "filewritable(file_path)
     " Check directory
-    call mkdir(fnamemodify(l:file_path, ':p:h'))
+    call mkdir(l:file_directory)
   endif
   
   " Add word in path, when not exists. check RegExp
