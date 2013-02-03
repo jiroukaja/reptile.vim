@@ -70,11 +70,6 @@ function! s:add_word(file_path, word, checked)
   endif
   
   " Add word in path, when not exists. check RegExp
-  echo '"join(readfile(l:file_path), "\n") =~ ' . "^" . l:word . "\\\\n"' . = ' ("\n" . join(readfile(l:file_path), "\n")) =~ "^" . l:word . "\\n"
-  echo '"join(readfile(l:file_path), "\n") =~ ' . "^" . l:word . "$" . ' = ' ("\n" . join(readfile(l:file_path), "\n")) =~ "^" . l:word . "$"
-  echo '"join(readfile(l:file_path), "\n") =~ ' . "\\\\n" . l:word . "\\\\n" . ' = ' ("\n" . join(readfile(l:file_path), "\n")) =~ "\\n" . l:word . "\\n"
-  echo '"join(readfile(l:file_path), "\n") =~ ' . "^" . l:word . "\\n" . ' = ' ("\n" . join(readfile(l:file_path), "\n")) =~ "^" . l:word . "\n"
-  echo '"join(readfile(l:file_path), "\n") =~ ' . "\\n" . l:word . "\\n" . ' = ' ("\n" . join(readfile(l:file_path), "\n")) =~ "\n" . l:word . "\n"
   if l:checked == s:no_check || "\n" . join(readfile(l:file_path), "\n") =~ "\n" . l:word . "\n"
     " Already exists!
     echomsg "Already exists word: " . l:word . " in " . l:file_path
