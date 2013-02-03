@@ -77,7 +77,7 @@ function! s:add_word(file_path, word, checked)
     " Add <cword>
     echo ":redir! >> " . l:file_path
     execute ":redir! >> " . l:file_path
-      silent! echo l:word
+      silent! echon l:word . "\n"
     redir END
     echomsg "Add " . l:word . " in ". l:file_path
   endif
