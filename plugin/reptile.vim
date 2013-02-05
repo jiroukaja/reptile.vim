@@ -35,10 +35,6 @@ let s:dictionary = type({})
 let s:string = type("")
 let s:no_check = 0
 
-g:reptile_previous_file_path = get(g:, reptile_previous_file_path, "")
-
-
-
 function! s:get_file_path(list)
   let l:list = a:list
   let l:lenght = len(l:list)
@@ -110,27 +106,21 @@ function! reptile#selected(path, ...)
   call s:add_word(l:file_path, l:selected, l:check)
 endfunction
 
-function! reptile#tab_open(...)
-  if a:0 > 0
-    let l:file_path = a:1
+function! reptile#tab_open()
+  if g:reptile_previous_file_path == ""
+    echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
+    return
   else
-    if g:reptile_previous_file_path == ""
-      echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
-      return
-    endif
     let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   endif
   normal! tabe l:file_path
 endfunction
 
-function! reptile#open(...)
-  if a:0 > 0
-    let l:file_path = a:1
+function! reptile#open()
+  if g:reptile_previous_file_path == ""
+    echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
+    return
   else
-    if g:reptile_previous_file_path == ""
-      echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
-      return
-    endif
     let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   endif
   normal! edit l:file_path
@@ -139,8 +129,8 @@ endfunction
 
 command -nargs=+ ReptileCword :call reptile#cursor(<args>)
 command -nargs=+ ReptileVword :call reptile#selected(<args>)
-command -nargs=? ReptileTabOpen :call reptile#tab_open(<args>)
-command -nargs=? ReptileOpen :call reptile#open(<args>)
+command -nargs=0 ReptileTabOpen :call reptile#tab_open()
+command -nargs=0 ReptileOpen :call reptile#open()
 
 let &cpo = s:save_cpo
 
