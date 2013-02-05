@@ -1,6 +1,6 @@
 " reptile.vim
 " Author: jiroukaja <jiroukaja@mac.com>
-" Last Change: 03 Feb 2013.
+" Last Change: 05 Feb 2013.
 " Version: 0.1
 " Licence:     The MIT License {{{
 "     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82,8 +82,6 @@ function! s:add_word(file_path, word, checked)
     silent! execute ":! echo " . l:word . " >> " . l:file_path
     echomsg "Add " . l:word . " in ". l:file_path
   endif
-
-  let g:reptile_previous_file_path = l:file_path
 endfunction
 
 
@@ -120,7 +118,7 @@ function! reptile#tab_open(...)
       echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
       return
     endif
-    let l:file_path = g:reptile_previous_file_path
+    let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   endif
   normal! tabe l:file_path
 endfunction
@@ -133,7 +131,7 @@ function! reptile#open(...)
       echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
       return
     endif
-    let l:file_path = g:reptile_previous_file_path
+    let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   endif
   normal! edit l:file_path
 endfunction
