@@ -108,12 +108,12 @@ endfunction
 
 function! reptile#tab_open()
   let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  normal! tabe l:file_path
+  execute ":tabe " . l:file_path
 endfunction
 
 function! reptile#open()
   let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  normal! edit l:file_path
+  execute ":edit " . l:file_path
 endfunction
 
 
