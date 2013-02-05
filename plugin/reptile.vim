@@ -35,9 +35,9 @@ let s:dictionary = type({})
 let s:string = type("")
 let s:no_check = 0
 
-if !exists(s:reptile_previous_file_path)
-  let s:reptile_previous_file_path = ""
-endif
+g:reptile_previous_file_path = get(g:, reptile_previous_file_path, "")
+
+
 
 function! s:get_file_path(list)
   let l:list = a:list
@@ -83,7 +83,7 @@ function! s:add_word(file_path, word, checked)
     echomsg "Add " . l:word . " in ". l:file_path
   endif
 
-  let s:reptile_previous_file_path = l:file_path
+  let g:reptile_previous_file_path = l:file_path
 endfunction
 
 
@@ -112,24 +112,15 @@ function! reptile#selected(path, ...)
   call s:add_word(l:file_path, l:selected, l:check)
 endfunction
 
-
-function! reptile#set_path(path)
-  if exists(a:path)
-    echoerr "Path is not exists."
-  endif
-  let s:reptile_previous_file_path = a:path
-endfunction
-
-
 function! reptile#tab_open(...)
   if a:0 > 0
     let l:file_path = a:1
   else
-    if s:reptile_previous_file_path == ""
+    if g:reptile_previous_file_path == ""
       echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
       return
     endif
-    let l:file_path = s:reptile_previous_file_path
+    let l:file_path = g:reptile_previous_file_path
   endif
   normal! tabe l:file_path
 endfunction
@@ -138,11 +129,11 @@ function! reptile#open(...)
   if a:0 > 0
     let l:file_path = a:1
   else
-    if s:reptile_previous_file_path == ""
+    if g:reptile_previous_file_path == ""
       echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
       return
     endif
-    let l:file_path = s:reptile_previous_file_path
+    let l:file_path = g:reptile_previous_file_path
   endif
   normal! edit l:file_path
 endfunction
@@ -152,7 +143,6 @@ command -nargs=+ ReptileCword :call reptile#cursor(<args>)
 command -nargs=+ ReptileVword :call reptile#selected(<args>)
 command -nargs=? ReptileTabOpen :call reptile#tab_open(<args>)
 command -nargs=? ReptileOpen :call reptile#open(<args>)
-command -nargs=1 ReptileSetPath :call reptile#set_path(<args>)
 
 let &cpo = s:save_cpo
 
