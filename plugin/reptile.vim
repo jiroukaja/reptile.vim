@@ -52,7 +52,7 @@ function! s:get_file_path(list)
       return l:list
     else
       echoerr 'Invalid values'
-      return
+      return ''
     endif
   endif
 endfunction
