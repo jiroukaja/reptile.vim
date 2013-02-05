@@ -107,22 +107,12 @@ function! reptile#selected(path, ...)
 endfunction
 
 function! reptile#tab_open()
-  if g:reptile_previous_file_path == ""
-    echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
-    return
-  else
-    let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  endif
+  let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   normal! tabe l:file_path
 endfunction
 
 function! reptile#open()
-  if g:reptile_previous_file_path == ""
-    echomsg ":ReptileSetPath {path} or Use ReptileCword/ReptileVword"
-    return
-  else
-    let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  endif
+  let l:file_path = s:get_file_path(g:reptile_previous_file_path)
   normal! edit l:file_path
 endfunction
 
