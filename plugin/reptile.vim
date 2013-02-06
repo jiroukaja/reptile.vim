@@ -48,12 +48,15 @@ function! s:get_file_path(list)
     if has_key(l:list, &filetype)
       let l:file_arg = &filetype
       return l:list[file_arg]
-    elseif type(l:list) == s:string
-      return l:list
     else
-      echoerr 'Invalid values'
-      return ''
+      echoerr "Invalid values"
+      return ""
     endif
+  elseif type(l:list) == s:string
+    return l:list
+  else
+    echoerr "Invalid values"
+    return ""
   endif
 endfunction
 
@@ -83,7 +86,7 @@ endfunction
 
 function! reptile#cursor(path, ...)
   let l:file_path = s:get_file_path(a:path)
-  let l:checked = get(a:, '1' , 0)
+  let l:checked = get(a:, "1" , 0)
   let l:word = expand('<cword>')
   call s:add_word(l:file_path, l:word, l:checked)
 endfunction
@@ -101,7 +104,7 @@ function! reptile#selected(path, ...)
     normal! gv"zy
     let l:selected = @z
   finally
-    call setreg('z', save_z, save_z_type)
+    call setreg("z", save_z, save_z_type)
   endtry
   call s:add_word(l:file_path, l:selected, l:check)
 endfunction
