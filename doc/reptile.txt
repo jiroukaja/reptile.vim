@@ -1,0 +1,79 @@
+*reptile.txt* memo
+
+Version:     0.1.0
+Last Change: 08 May 2013
+Author:      jiroukaja <jiroukaja at mac.com>
+Licence:     The MIT License}}}
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+
+
+==============================================================================
+INTRODUCTION						*reptile-introduction*
+
+*reptile* inserts word into file like reptile runs into a stone...
+
+Requirement:
+
+Using add dictionary
+- |neocomplcache|(Recommend latest version at https://github.com/Shougo/neocomplcache)
+set g:neocomplcache_dictionary_filetype_lists
+
+Latest version:
+https://github.com/jiroukaja/reptile.vim
+
+
+==============================================================================
+USAGE							*reptile-usage*
+
+TODO implement Unite.vim
+To select tags, execute |:Unite| with argument of reptile
+>
+        :Unite reptile
+<
+
+
+For example
+
+>
+        let g:neocomplcache_dictionary_filetype_lists = {
+        \ 'default'    : '',
+        \ 'vim'        : $HOME.'/.vim/dict/vim.dict',
+        \ 'lisp'       : $HOME.'/.vim/dict/lisp.dict',
+        \ }
+
+        nnoremap <silent> <leader>+
+        \ :ReptileCword g:neocomplcache_dictionary_filetype_lists, 1<CR>
+        vnoremap <silent> <leader>+
+        \ :<C-u>ReptileVword g:neocomplcache_dictionary_filetype_lists, 1<CR>
+<
+
+When cursor on word and <leader>+, insert word into specific file(same filetype).
+When selected word and <leader>+, insert word into specific file(same filetype).
+"1" does not allow duplication.
+
+>
+        let g:reptile_previous_file_path = g:neocomplcache_dictionary_filetype_lists
+
+        :ReptileOpen or :ReptileTabOpen
+<
+
+|:ReptileOpen| and |:ReptileTabOpen| is show splecific files(same filetype).
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
