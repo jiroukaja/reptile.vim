@@ -1,5 +1,5 @@
 " reptile.vim
-" Author: jiroukaja <jiroukaja@mac.com>
+" Author: jiroukaja <jiroukaja at mac.com>
 " Last Change: 05 Feb 2013.
 " Version: 0.1
 " Licence:     The MIT License {{{
@@ -66,20 +66,27 @@ function! s:add_word(file_path, word, checked)
   let l:file_directory = fnamemodify(l:file_path, ':p:h')
   let l:word = a:word
   let l:checked = a:checked
+  let l:checked_sort = ' -o '
   " Check path
   if !isdirectory(l:file_directory) "filewritable(file_path)
     " Check directory
     call mkdir(l:file_directory)
   endif
+
+  " for file sorting
+  if l:checked != s:no_check
+    let l:checked = ' -uo '
+  endif
   
   " Add word in path, when not exists. check RegExp
-  if l:checked == s:no_check || "\n" . join(readfile(l:file_path), "\n") =~ "\n" . l:word . "\n"
+  if l:checked == s:no_check || "\n".join(readfile(l:file_path), "\n") =~ "\n".l:word."\n"
     " Already exists!
-    echomsg "Already exists word: " . l:word . " in " . l:file_path
+    echomsg "Already exists word: ".l:word." in ".l:file_path
   else
     " Add <cword>
-    silent! execute ":! echo " . l:word . " >> " . l:file_path
-    echomsg "Add " . l:word . " in ". l:file_path
+    silent! execute ":! echo ".l:word." >> ".l:file_path
+    silent! execute ":! sort ".l:file_path.l:checked_sort.l:file_path
+    echomsg "Add ".l:word." in ". l:file_path
   endif
 endfunction
 
@@ -111,12 +118,12 @@ endfunction
 
 function! reptile#tab_open()
   let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  execute ":tabe " . l:file_path
+  execute ":tabe ".l:file_path
 endfunction
 
 function! reptile#open()
   let l:file_path = s:get_file_path(g:reptile_previous_file_path)
-  execute ":edit " . l:file_path
+  execute ":edit ".l:file_path
 endfunction
 
 
