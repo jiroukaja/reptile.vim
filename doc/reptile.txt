@@ -1,4 +1,4 @@
-*reptile.txt* memo
+*reptile.txt* inserts word into file like reptile runs into a stone...
 
 Version:     0.1.0
 Last Change: 08 May 2013
