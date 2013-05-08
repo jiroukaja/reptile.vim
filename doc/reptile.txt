@@ -26,7 +26,7 @@ Licence:     The MIT License}}}
 ==============================================================================
 INTRODUCTION						*reptile-introduction*
 
-*reptile* inserts word into file like reptile runs into a stone...
+*reptile* inserts a word into file like reptile runs into a stone...
 
 Requirement:
 
@@ -60,12 +60,18 @@ For example
         nnoremap <silent> <leader>+
         \ :ReptileCword g:neocomplcache_dictionary_filetype_lists, 1<CR>
         vnoremap <silent> <leader>+
-        \ :<C-u>ReptileVword g:neocomplcache_dictionary_filetype_lists, 1<CR>
+        \ :<C-u>ReptileVword g:neocomplcache_dictionary_filetype_l"sts, 1<CR>
 <
 
-When cursor on word and <leader>+, insert word into specific file(same filetype).
-When selected word and <leader>+, insert word into specific file(same filetype).
-"1" does not allow duplication.
+When cursor on a word and <leader>+, insert into specific file(same filetype).
+When selected and <leader>+, insert into specific file(same filetype).
+"1" does not allow duplication, and sort words.
+
+>
+        :ReptileCword "memo/memolist.txt", 1
+<
+
+When cursor on a word and this, insert into "memo/memolist.txt" and sort.
 
 >
         let g:reptile_previous_file_path = g:neocomplcache_dictionary_filetype_lists
