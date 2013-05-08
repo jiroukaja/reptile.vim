@@ -33,7 +33,6 @@ set cpo&vim
 " Local values
 let s:dictionary = type({})
 let s:string = type("")
-let s:no_check = 0
 
 function! s:get_file_path(list)
   let l:list = a:list
@@ -62,30 +61,31 @@ endfunction
 
 
 function! s:add_word(file_path, word, checked)
-  let l:file_path = a:file_path
+  let l:file_path = fnamemodify(a:file_path, ':p')
   let l:file_directory = fnamemodify(l:file_path, ':p:h')
   let l:word = a:word
   let l:checked = a:checked
-  let l:checked_sort = ' -o '
   " Check path
-  if !isdirectory(l:file_directory) "filewritable(file_path)
+  if !isdirectory(l:file_directory) 
     " Check directory
-    call silent! execute "! mkdir -p ".l:file_directory
+    silent! execute ":! mkdir -p ".l:file_directory
   endif
 
   " for file sorting
-  if l:checked != s:no_check
-    let l:checked = ' -uo '
+  if l:checked
+    let l:file_sort = l:file_path.' -uo '.l:file_path
+  else
+    let l:file_sort = l:file_path.' -o '.l:file_path
   endif
-  
+
   " Add word in path, when not exists. check RegExp
-  if l:checked != s:no_check && "\n".join(readfile(l:file_path), "\n") !~ "\n".l:word."\n"
+  if filewritable(l:file_path) && l:checked && ("\n".join(readfile(l:file_path), "\n") =~ "\n".l:word)
     " Already exists!
     echomsg "Already exists word: ".l:word." in ".l:file_path
   else
     " Add <cword>
     silent! execute ":! echo ".l:word." >> ".l:file_path
-    silent! execute ":! sort ".l:file_path.l:checked_sort.l:file_path
+    silent! execute ":! sort ".l:file_sort
     echomsg "Add ".l:word." in ". l:file_path
   endif
 endfunction
