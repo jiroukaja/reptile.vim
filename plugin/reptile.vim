@@ -70,7 +70,7 @@ function! s:add_word(file_path, word, checked)
   " Check path
   if !isdirectory(l:file_directory) "filewritable(file_path)
     " Check directory
-    call mkdir(l:file_directory)
+    call silent! execute "! mkdir -p ".l:file_directory
   endif
 
   " for file sorting
@@ -79,7 +79,7 @@ function! s:add_word(file_path, word, checked)
   endif
   
   " Add word in path, when not exists. check RegExp
-  if l:checked == s:no_check || "\n".join(readfile(l:file_path), "\n") =~ "\n".l:word."\n"
+  if l:checked != s:no_check && "\n".join(readfile(l:file_path), "\n") !~ "\n".l:word."\n"
     " Already exists!
     echomsg "Already exists word: ".l:word." in ".l:file_path
   else
